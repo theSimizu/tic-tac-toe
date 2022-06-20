@@ -41,6 +41,7 @@ def calculate_move():
     sleep(2)
 
 def player_move():
+    if_end_game()
     while True:
         try:
             pos = int(input('Please select a position to place a "X" (1-9): '))
@@ -55,6 +56,7 @@ def player_move():
             quit()
 
 def pc_move():
+    if_end_game()
     calculate_move()
     if os.uname().sysname == 'Linux':
         os.system('clear')
@@ -103,6 +105,7 @@ def pc_move():
             board[open_sides[randint(0, len(open_sides))-1]] = 'O'
             return
 
+
 def clear_board():
     for c in range(1, 10):
         board[c] = ' '
@@ -116,25 +119,25 @@ def keep():
         clear_board()
         return
     quit()
-    
+
+def if_end_game():
+    if is_win(board, 'X'):
+        print('You Win!!!')
+        keep()
+
+    elif is_win(board, 'O'):
+        print('You Lose')
+        keep()
+
+    elif is_draw():
+        print('Draw')
+        keep()
 
 def run():
     while True:
         print_board()
         player_move()
         print_board()        
-        if is_win(board, 'X'):
-            print('You Win!!!')
-            keep()
-
-        elif is_win(board, 'O'):
-            print('You Lose')
-            keep()
-
-        elif is_draw():
-            print('Draw')
-            keep()
-            
         pc_move()
 
 
